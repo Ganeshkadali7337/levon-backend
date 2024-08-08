@@ -204,6 +204,10 @@ app.put("/update-teacher/:id", authenticate, async (req, res) => {
 });
 
 app.get("/student-details", authenticate, async (req, res) => {
+  if (req.role === "teacher") {
+    return res.status(400).send("access denied");
+  }
+
   try {
     const studentData = await studentSchema.findOne({ student_id: req.userId });
     res.status(200).send(studentData);
