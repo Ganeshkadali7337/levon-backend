@@ -68,7 +68,7 @@ app.post("/login", async (req, res) => {
           role: existed.role,
         };
         const token = jwt.sign(payload, "login-token");
-        res.status(200).send({ token, role: existed.role });
+        res.status(200).send({ token, role: existed.role, userData: existed });
       }
     }
   } catch (err) {
