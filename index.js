@@ -106,6 +106,11 @@ app.post("/add-student", authenticate, async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const existed = await userSchema.findOne({ username });
+
+    if (existed) {
+      res.status(400).send("student username is already taken");
+    }
     const newUser = new userSchema({
       username,
       password: hashedPassword,
